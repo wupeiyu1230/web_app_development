@@ -1,0 +1,35 @@
+DROP TABLE IF EXISTS saved_recipes;
+DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(120) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'user',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE recipes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author_id INTEGER NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    ingredients TEXT NOT NULL,
+    steps TEXT NOT NULL,
+    image_url VARCHAR(255),
+    category VARCHAR(50),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+CREATE TABLE saved_recipes (
+    user_id INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    saved_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, recipe_id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE
+);
