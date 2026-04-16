@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-4">發布新食譜</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form action="{{ url_for('recipes.create_recipe_submit') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">食譜名稱 *</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">描述簡介</label>
+                        <textarea name="description" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">食材列表 (必填，請用逗號分隔) *</label>
+                        <input type="text" name="ingredients" class="form-control" placeholder="例如：番茄, 雞蛋, 青蔥" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">製作步驟 *</label>
+                        <textarea name="steps" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">分類 (選填)</label>
+                            <input type="text" name="category" class="form-control" placeholder="中式、甜點...">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">圖片網址 (選填)</label>
+                            <input type="text" name="image_url" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">儲存並發布食譜</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

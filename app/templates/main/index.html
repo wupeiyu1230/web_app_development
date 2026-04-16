@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero-section">
+    <h1 class="display-4 fw-bold text-dark">今天想煮什麼？</h1>
+    <p class="lead mt-3 text-muted">探索各種精選食譜，或者輸入您手邊的食材，尋找美味佳餚。</p>
+    <div class="mt-4">
+        <form action="{{ url_for('recipes.search_ingredients_dummy' if missing else 'recipes.search_by_ingredients') }}" method="GET" class="d-inline-block w-50">
+            <div class="input-group input-group-lg shadow-sm">
+                <input type="text" name="ingredients" class="form-control" placeholder="輸入庫存食材 (如: 雞蛋, 番茄)...">
+                <button class="btn btn-primary" type="submit">清冰箱搜尋</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h3 class="fw-bold mb-4">✨ 最新推薦食譜</h3>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for recipe in recipes %}
+    <div class="col">
+        <div class="card recipe-card h-100">
+            {% if recipe.image_url %}
+            <img src="{{ recipe.image_url }}" class="recipe-image-placeholder" alt="{{ recipe.title }}">
+            {% else %}
+            <div class="recipe-image-placeholder">{{ recipe.title[0] }}</div>
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold">
+                    <a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="text-dark text-decoration-none stretched-link">{{ recipe.title }}</a>
+                </h5>
+                <p class="card-text text-muted small flex-grow-1">{{ recipe.description[:60] }}...</p>
+                <div class="mt-3">
+                    <span class="badge bg-light text-dark border">{{ recipe.category or '美味佳餚' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center text-muted">目前還沒有任何食譜！成為第一位建立者吧。</div>
+    {% endfor %}
+</div>
+{% endblock %}

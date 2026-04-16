@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-4">編輯食譜</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form action="{{ url_for('recipes.edit_recipe_submit', recipe_id=recipe.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">食譜名稱 *</label>
+                        <input type="text" name="title" class="form-control" value="{{ recipe.title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">描述簡介</label>
+                        <textarea name="description" class="form-control" rows="2">{{ recipe.description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">食材列表 (用逗號分隔) *</label>
+                        <input type="text" name="ingredients" class="form-control" value="{{ recipe.ingredients }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">製作步驟 *</label>
+                        <textarea name="steps" class="form-control" rows="5" required>{{ recipe.steps }}</textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">分類</label>
+                            <input type="text" name="category" class="form-control" value="{{ recipe.category or '' }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">圖片網址</label>
+                            <input type="text" name="image_url" class="form-control" value="{{ recipe.image_url or '' }}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">更新食譜</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

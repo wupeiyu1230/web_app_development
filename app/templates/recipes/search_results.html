@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="fw-bold mb-4">搜尋結果</h2>
+{% if keyword %}
+    <p class="text-muted">顯示包含：<strong>{{ keyword }}</strong> 的食譜，共有 {{ recipes|length }} 筆結果。</p>
+{% elif ingredients %}
+    <p class="text-muted">顯示使用或包含：<strong>{{ ingredients }}</strong> 組合的食譜，共有 {{ recipes|length }} 筆結果。</p>
+{% endif %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+    {% for recipe in recipes %}
+    <div class="col">
+        <div class="card recipe-card h-100">
+            <div class="card-body">
+                <h5 class="fw-bold"><a href="{{ url_for('recipes.view_recipe', recipe_id=recipe.id) }}" class="text-dark text-decoration-none stretched-link">{{ recipe.title }}</a></h5>
+                <p class="small text-muted">{{ recipe.description[:100] }}...</p>
+                <div class="mt-2"><span class="badge bg-secondary">{{ recipe.category }}</span></div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center text-muted p-5 bg-light rounded">
+        <h4>找不到任何相關食譜</h4>
+        <p>換個關鍵字或減少食材組合再試試看吧！</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
